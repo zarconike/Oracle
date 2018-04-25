@@ -1,1 +1,63 @@
-prueba
+
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "ejercicios"."VIEW_2" ("IDCUSTO", "NAMECUSTO", "CUSTOCOUNTRY", "IDSALES", "NAMESALES", "SALESCOUNTRY", "COMMISSION") AS 
+  select custo.id idcusto, custo.name namecusto, custo.country custocountry, sales.id idsales, sales.name namesales, sales.country salescountry, sales.COMMISSION
+from customers custo inner join salesman sales on custo.salesman_id = sales.id
+where sales.commission > 12 and (custo.country <> sales.country)
+--------------------------------------------------------
+--  DDL for View VIEW_1
+--------------------------------------------------------
+
+  CREATE OR REPLACE FORCE NONEDITIONABLE VIEW "ejercicios"."VIEW_1" ("ID", "AMOUNT", "NAME", "COUNTRY") AS 
+  select ord.id, ord.amount, customer.name, customer.country
+from orders ord inner join CUSTOMERS  customer 
+on ord.CUSTOMER_ID = customer.ID 
+where ord.amount between 500 and 2000
+--------------------------------------------------------
+--  DDL for Index CUSTOMERS_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "ejercicios"."CUSTOMERS_PK" ON "ejercicios"."CUSTOMERS" ("ID")
+--------------------------------------------------------
+--  DDL for Index ORDERS_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "ejercicios"."ORDERS_PK" ON "ejercicios"."ORDERS" ("ID")
+--------------------------------------------------------
+--  DDL for Index SALESMAN_PK
+--------------------------------------------------------
+
+  CREATE UNIQUE INDEX "ejercicios"."SALESMAN_PK" ON "ejercicios"."SALESMAN" ("ID")
+--------------------------------------------------------
+--  Constraints for Table SALESMAN
+--------------------------------------------------------
+
+  ALTER TABLE "ejercicios"."SALESMAN" ADD CONSTRAINT "SALESMAN_PK" PRIMARY KEY ("ID")
+  USING INDEX  ENABLE
+--------------------------------------------------------
+--  Constraints for Table ORDERS
+--------------------------------------------------------
+
+  ALTER TABLE "ejercicios"."ORDERS" ADD CONSTRAINT "ORDERS_PK" PRIMARY KEY ("ID")
+  USING INDEX  ENABLE
+--------------------------------------------------------
+--  Constraints for Table CUSTOMERS
+--------------------------------------------------------
+
+  ALTER TABLE "ejercicios"."CUSTOMERS" ADD CONSTRAINT "CUSTOMERS_PK" PRIMARY KEY ("ID")
+  USING INDEX  ENABLE
+--------------------------------------------------------
+--  Ref Constraints for Table ORDERS
+--------------------------------------------------------
+
+  ALTER TABLE "ejercicios"."ORDERS" ADD CONSTRAINT "CUSTOMER_ORDER_FK" FOREIGN KEY ("CUSTOMER_ID")
+	  REFERENCES "ejercicios"."CUSTOMERS" ("ID") ENABLE
+  ALTER TABLE "ejercicios"."ORDERS" ADD CONSTRAINT "SALESMAN_ORDER_FK" FOREIGN KEY ("SALESMAN_ID")
+	  REFERENCES "ejercicios"."SALESMAN" ("ID") ENABLE
+--------------------------------------------------------
+--  Ref Constraints for Table CUSTOMERS
+--------------------------------------------------------
+
+  ALTER TABLE "ejercicios"."CUSTOMERS" ADD CONSTRAINT "SALESMAN_FK" FOREIGN KEY ("SALESMAN_ID")
+	  REFERENCES "ejercicios"."SALESMAN" ("ID") ENABLE
