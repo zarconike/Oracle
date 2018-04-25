@@ -18,17 +18,31 @@ SQL
 
 plsql(:data).execute <<-SQL
  -- CREACION VISTA 1 SIN PUNTO Y COMA
- -- EJEMPLO CREATE VIEW ...
+ CREATE VIEW view_1 AS 
+select ord.id, ord.amount, customer.name, customer.country
+from orders ord inner join CUSTOMERS  customer 
+on ord.CUSTOMER_ID = customer.ID 
+where ord.amount between 500 and 2000
 SQL
 
 plsql(:data).execute <<-SQL
  -- CREACION VISTA 2 SIN PUNTO Y COMA
- -- EJEMPLO CREATE VIEW ...
+ 
+CREATE VIEW view_2 AS 
+
+select custo.id idcusto, custo.name namecusto, custo.country custocountry, sales.id idsales, sales.name namesales, sales.country salescountry, sales.COMMISSION
+from customers custo inner join salesman sales on custo.salesman_id = sales.id
+where sales.commission > 12 and (custo.country <> sales.country)
 SQL
 
 plsql(:data).execute <<-SQL
  -- CREACION VISTA 3 SIN PUNTO Y COMA
- -- EJEMPLO CREATE VIEW ...
+ CREATE VIEW view_3 AS 
+
+select custo.id customer_id, custo.name customer_name, sales.id salesman_id, sales.name salesman_name 
+from customers custo left join salesman sales 
+on custo.salesman_id = sales.id
+where sales.id = null 
 SQL
 
 plsql(:data).execute <<-SQL
