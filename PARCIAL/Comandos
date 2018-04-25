@@ -1,1 +1,37 @@
-prueba
+plsql.execute <<-SQL
+ -- CREACION TABLESPACE SIN PUNTO Y COMA
+ CREATE TABLESPACE mid_term DATAFILE 'Hernandez.dat' SIZE 25M ONLINE
+SQL
+
+plsql.execute <<-SQL
+ -- CREACION PERFIL SIN PUNTO Y COMA
+ CREATE PROFILE exam LIMIT 
+  IDLE_TIME  10
+  FAILED_LOGIN_ATTEMPTS 4
+SQL
+
+plsql.execute <<-SQL
+ -- CREACION USUARIO SIN PUNTO Y COMA
+CREATE USER ejercicios  IDENTIFIED BY ejercicios  DEFAULT TABLESPACE mid_term QUOTA UNLIMITED ON mid_term PROFILE exam; 
+grant connect to ejercicios
+SQL
+
+plsql(:data).execute <<-SQL
+ -- CREACION VISTA 1 SIN PUNTO Y COMA
+ -- EJEMPLO CREATE VIEW ...
+SQL
+
+plsql(:data).execute <<-SQL
+ -- CREACION VISTA 2 SIN PUNTO Y COMA
+ -- EJEMPLO CREATE VIEW ...
+SQL
+
+plsql(:data).execute <<-SQL
+ -- CREACION VISTA 3 SIN PUNTO Y COMA
+ -- EJEMPLO CREATE VIEW ...
+SQL
+
+plsql(:data).execute <<-SQL
+ -- CREACION VISTA 4 SIN PUNTO Y COMA
+ -- EJEMPLO CREATE VIEW ...
+SQL
